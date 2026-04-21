@@ -1,9 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RustRcon", "RustRcon.csproj", "{FAA71B79-CF50-4D37-8808-F44504345D57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RustRcon", "src\Runtime\RustRcon.csproj", "{FAA71B79-CF50-4D37-8808-F44504345D57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RustRcon.Generator", "src\Generator\RustRcon.Generator.csproj", "{C1D2E3F4-A5B6-7890-CDEF-012345678901}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RustRcon.Generator.Tests", "src\Generator.Tests\RustRcon.Generator.Tests.csproj", "{D2E3F4A5-B6C7-8901-DEFA-123456789012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{FAA71B79-CF50-4D37-8808-F44504345D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAA71B79-CF50-4D37-8808-F44504345D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA71B79-CF50-4D37-8808-F44504345D57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D2E3F4-A5B6-7890-CDEF-012345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D2E3F4-A5B6-7890-CDEF-012345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D2E3F4-A5B6-7890-CDEF-012345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D2E3F4-A5B6-7890-CDEF-012345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2E3F4A5-B6C7-8901-DEFA-123456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2E3F4A5-B6C7-8901-DEFA-123456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2E3F4A5-B6C7-8901-DEFA-123456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2E3F4A5-B6C7-8901-DEFA-123456789012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

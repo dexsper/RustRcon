@@ -1,0 +1,28 @@
+﻿using RustRcon.Types;
+using RustRcon.Types.Commands.Base;
+
+namespace RustRcon.Generated.Commands;
+
+/// <summary>RCON command: <c>npc.vendor_minicopter_enabled</c>.</summary>
+/// <remarks>Full RCON name: <c>npc.vendor_minicopter_enabled</c></remarks>
+public sealed class NpcVendorMinicopterEnabledCommand : BaseConVarCommand<bool>
+{
+    /// <summary>Full dotted RCON name.</summary>
+    public const string CommandFullName = "npc.vendor_minicopter_enabled";
+
+    /// <summary>Reads the current value of <c>npc.vendor_minicopter_enabled</c>.</summary>
+    public static NpcVendorMinicopterEnabledCommand CreateGet()
+    {
+        var cmd = CreatePackage<NpcVendorMinicopterEnabledCommand>();
+        cmd.Content = CommandFullName;
+        return cmd;
+    }
+
+    /// <summary>Sets <c>npc.vendor_minicopter_enabled</c> to <paramref name="value"/>.</summary>
+    public static NpcVendorMinicopterEnabledCommand CreateSet(bool value)
+    {
+        var cmd = CreatePackage<NpcVendorMinicopterEnabledCommand>();
+        cmd.Content = $"{CommandFullName} {value}";
+        return cmd;
+    }
+}
