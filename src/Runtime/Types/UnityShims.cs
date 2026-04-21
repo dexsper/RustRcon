@@ -1,5 +1,6 @@
 using System.Globalization;
 
+namespace RustRcon.Types;
 // ReSharper disable InconsistentNaming
 // Minimal Unity type stubs so that generated DTOs containing Unity structs compile
 // without referencing the full UnityEngine assembly. These types are used only for

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>RustRcon.Cli</AssemblyName>
+        <RootNamespace>RustRcon.Cli</RootNamespace>
+
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>rustrcon</ToolCommandName>
+        <PackageId>RustRcon.Cli</PackageId>
+        <Description>Interactive CLI for Rust game server RCON — connect, explore and invoke every server command from your terminal.</Description>
+        <Authors>dexsper</Authors>
+        <PackageProjectUrl>https://github.com/dexsper/RustRcon</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dexsper/RustRcon</RepositoryUrl>
+        <PackageTags>rust;rcon;game-server;cli;dotnet-tool</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console" Version="0.55.2" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Runtime\RustRcon.csproj" />
+    </ItemGroup>
+
+</Project>

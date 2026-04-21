@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RustRcon.Types;
 
 namespace RustRcon.Generated.Dtos;
 
