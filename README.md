@@ -1,7 +1,7 @@
 RustRcon
 ===
-[![NuGet](https://img.shields.io/nuget/v/RustRcon.svg)](https://www.nuget.org/packages/RustRcon)
-[![NuGet](https://img.shields.io/nuget/dt/RustRcon.svg)](https://www.nuget.org/packages/RustRcon)
+[![NuGet](https://img.shields.io/nuget/v/RustRcon)](https://www.nuget.org/packages/RustRcon)
+[![NuGet](https://img.shields.io/nuget/dt/RustRcon)](https://www.nuget.org/packages/RustRcon)
 [![GitHub Actions](https://github.com/dexsper/RustRcon/workflows/Publish/badge.svg)](https://github.com/dexsper/RustRcon/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
