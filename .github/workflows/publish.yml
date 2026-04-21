@@ -1,0 +1,131 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    name: Pack, Publish & Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Package version from git tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test src/Generator.Tests --no-build --configuration Release
+
+      # --- NuGet (library only) ---
+
+      - name: Pack Runtime library
+        run: |
+          dotnet pack src/Runtime \
+            --no-build --configuration Release \
+            -p:Version=${{ env.VERSION }} \
+            --output dist/nupkg
+
+      - name: Push to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push "dist/nupkg/*.nupkg" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+
+      # --- CLI binaries (self-contained, one per platform) ---
+
+      - name: Publish CLI for linux-x64
+        run: |
+          dotnet publish src/Cli \
+            --configuration Release \
+            --runtime linux-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:Version=${{ env.VERSION }} \
+            --output dist/cli/linux-x64
+
+      - name: Publish CLI for win-x64
+        run: |
+          dotnet publish src/Cli \
+            --configuration Release \
+            --runtime win-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:Version=${{ env.VERSION }} \
+            --output dist/cli/win-x64
+
+      - name: Publish CLI for osx-x64
+        run: |
+          dotnet publish src/Cli \
+            --configuration Release \
+            --runtime osx-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:Version=${{ env.VERSION }} \
+            --output dist/cli/osx-x64
+
+      - name: Zip CLI binaries
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          cd dist/cli
+          for rid in linux-x64 win-x64 osx-x64; do
+            zip -j "../../dist/rustrcon-cli-${TAG}-${rid}.zip" "${rid}/"*
+            echo "Created dist/rustrcon-cli-${TAG}-${rid}.zip"
+          done
+
+      # --- Runtime library zip archives per TFM ---
+
+      - name: Create per-TFM zip archives
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+
+          for tfm in net10.0 netstandard2.1; do
+            staging="dist/zip/${tfm}"
+            mkdir -p "${staging}"
+
+            src="src/Runtime/bin/Release/${tfm}"
+            cp "${src}/RustRcon.dll" "${staging}/" 2>/dev/null || true
+            cp "${src}/RustRcon.xml" "${staging}/" 2>/dev/null || true
+            cp "${src}/RustRcon.pdb" "${staging}/" 2>/dev/null || true
+
+            archive="dist/rustrcon-${TAG}-${tfm}.zip"
+            (cd "${staging}" && zip -r "../../../${archive}" .)
+            echo "Created ${archive}"
+          done
+
+      # --- GitHub Release ---
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/nupkg/*.nupkg
+            dist/nupkg/*.snupkg
+            dist/rustrcon-cli-*.zip
+            dist/rustrcon-*.zip

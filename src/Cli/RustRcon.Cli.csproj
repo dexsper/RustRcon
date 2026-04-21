@@ -18,6 +18,8 @@
         <RepositoryUrl>https://github.com/dexsper/RustRcon</RepositoryUrl>
         <PackageTags>rust;rcon;game-server;cli;dotnet-tool</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
